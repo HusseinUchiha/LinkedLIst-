@@ -1,0 +1,208 @@
+
+package project1;
+
+
+class LinkedList<T extends Comparable<T>> implements Compartor<T>
+    {
+   
+    @Override
+    public int compare(T a, T b) {
+    return a.compareTo(b);
+  }
+        public Node<T> head;
+        Node<T> tail;
+        
+        public LinkedList()
+        {
+            head = null;
+            tail = null;
+        }
+
+        public void PushFront(T key)
+        {
+            if (head == null)
+            {
+                head = new Node<>(key);
+            }
+            else
+            {
+                Node<T> node = new Node<>(key);
+                node.next = head;
+                head = node;
+                if (tail == null)
+                {
+                    tail = head.next;
+                }
+            }
+        }
+
+        public void PopFront()
+        {
+            if (head == null)
+            {
+                System.out.print("List Is Empty");
+                tail = null;
+                return;
+            }
+            head = head.next;
+        }
+
+        
+        
+        public void PushBack(T key)
+        {
+
+            Node<T> node = new Node<>(key);
+            node.next = null;
+            if (tail == null)
+            {
+                head = tail = node;
+            }
+            else
+            {
+                tail.next=node;
+                tail=node;
+            }
+        }
+
+        public void PopBack()
+        {
+            if (head == null)
+            {
+               System.out.print("List Is Empty");
+                return;
+            }
+            if (head == tail)
+            {
+                head = tail = null;
+            }
+            else
+            {
+
+                Node<T> p = new Node<>();
+                p = head;
+                while (p.next.next != null)
+                {
+                    p = p.next;
+                }
+                p.next = null;
+                tail = p;
+            }
+
+        }
+
+        public void AddAfter(Node<T> node, T key)
+        {
+            Node<T> node2 = new Node<>(key);
+            node2.next = node.next;
+            node.next = node2;
+            if (tail == node)
+            {
+                tail = node2;
+            }
+            
+        }
+
+        public boolean IsEmpty()
+        {
+            return head == null;
+        }
+
+        public T topFront()
+        {
+            return head.key;
+        }
+
+        public T topBack()
+        {
+            return tail.key;
+        }
+       
+        public void popKey(T key)
+        {
+            
+        // Store head node 
+        Node<T> temp = head, prev = null; 
+  
+        // If head node itself holds the key to be deleted 
+        if (temp != null && temp.key == key) 
+        { 
+            head = temp.next; // Changed head 
+            return; 
+        } 
+  
+        while (temp != null && temp.key != key) 
+        { 
+            prev = temp; 
+            temp = temp.next; 
+        }     
+  
+        // If key was not present in linked list 
+        if (temp == null) return; 
+  
+        // Unlink the node from linked list 
+        prev.next = temp.next; 
+
+            
+        }
+        
+        public T getData (int index)
+        {
+            Node<T> temp = head;
+            int i=1;
+            
+            while(head!=null)
+            {
+                
+                if (i==index)
+                {
+                    return head.key;
+                }
+                i++;
+                head=head.next;
+                
+            }
+            head=temp;
+            return head.key;
+        }
+
+        public int countListLength()
+        {
+            Node<T> temp = head;
+            int i = 0;
+            while (head != null)
+            {
+                i++;
+                head = head.next;
+            }
+            head = temp;
+            return i;
+        }
+        public void addSorted (T data)
+        {
+            int x=head.key.compareTo(data);
+            if (head == null)
+            {
+                head = new Node(data);
+            }
+            else if (x==0)
+            {
+                PushBack(data);
+            }
+            else
+            {
+                head.addSorted(data);
+            }
+ 
+        }
+        public void print()
+        {
+            Node<T> temp = head;
+            while (head != null)
+            {
+                System.out.print("|" + head.key + "|-->");
+                head = head.next;
+            }
+            head = temp;
+        }
+}
